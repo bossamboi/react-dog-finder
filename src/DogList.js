@@ -1,27 +1,31 @@
 import React from "react";
-import { useState } from "react/cjs/react.production.min";
-import axios from "axios";
+
 import { Link } from "react-router-dom";
+// import * as img from "../public";
 
-const DOG_API = "http://localhost:5001/dogs";
+function DogList({ dogs }) {
+	function renderHTML() {
+		return dogs.isLoading ? (
+			<i>Loading...</i>
+		) : (
+			<div>
+				{dogs.dogs.map((dog, i) => (
+					<div key={dog.src}>
+						<Link to={`/dogs/${dog.src}`}>
+							<h3>{dog.name}</h3>
+						</Link>
+						<img
+							style={{ width: "150px" }}
+							src={`/${dog.src}.jpg`}
+							alt="dog pic"
+						/>
+					</div>
+				))}
+			</div>
+		);
+	}
 
-async function DogList() {
-
-  const dogList = await axios.get(DOG_API);
-  const [dogs, setDogs] = useState(dogList.data);
-
-
-  return (
-    <div>
-      {dogs.map((dog, i) => (
-        <div key={dog.name}>
-          <Link to={`/dogs/${dog.name}`}><h3>{dog.name}</h3></Link>
-          <img style={{width: "150px"}} src={`../public/${dog.name}.jpg`} alt="dog pic"/>
-        </div>
-      ))}
-
-    </div>
-  );
+	return <div>{renderHTML()}</div>;
 }
 
-export default DogList
+export default DogList;
