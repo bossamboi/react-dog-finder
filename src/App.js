@@ -9,36 +9,36 @@ import Nav from "./Nav";
 const DOG_API = "http://localhost:5001/dogs";
 
 function App() {
-	const [dogs, setDogs] = useState({ dogs: null, isLoading: true });
+  const [dogs, setDogs] = useState({ dogs: null, isLoading: true });
 
-	async function getDogs() {
-		const dogList = await axios.get(DOG_API);
-		setDogs({ dogs: dogList.data, isLoading: false });
-	}
+  async function getDogs() {
+    const dogList = await axios.get(DOG_API);
+    setDogs({ dogs: dogList.data, isLoading: false });
+  }
 
-	if (dogs.isLoading) {
-		getDogs();
-	}
+  if (dogs.isLoading) {
+    getDogs();
+  }
 
-	function getDogInfo(src) {
-		const result = dogs.dogs.filter((dog) => dog.src === src);
-		return result[0];
-	}
+  function getDogInfo(src) {
+    const result = dogs.dogs.filter((dog) => dog.src === src);
+    return result[0];
+  }
 
-	return (
-		<div className="App">
-			<h1>To the Dogs</h1>
-			<BrowserRouter>
-				<Nav dogs={dogs} />
-				<Routes>
-					<Route path="/" element={<Navigate to="/dogs" />} />
-					<Route path="/dogs" element={<DogList dogs={dogs} />} />
-					<Route path="/dogs/:src" element={<Dog getDogInfo={getDogInfo} />} />
-					<Route path="*" element={<Navigate to="/dogs" />} />
-				</Routes>
-			</BrowserRouter>
-		</div>
-	);
+  return (
+    <div className="App">
+      <h1>To the Dogs</h1>
+      <BrowserRouter>
+        <Nav dogs={dogs} />
+        <Routes>
+          <Route path="/" element={<Navigate to="/dogs" />} />
+          <Route path="/dogs" element={<DogList dogs={dogs} />} />
+          <Route path="/dogs/:src" element={<Dog getDogInfo={getDogInfo} />} />
+          <Route path="*" element={<Navigate to="/dogs" />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
+  );
 }
 
 export default App;
